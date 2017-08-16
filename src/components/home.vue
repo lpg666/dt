@@ -51,11 +51,21 @@
         <div class="sz_gb" @click="szGb"></div>
         <img src="../assets/img/sz.png">
       </div>
+      <div class="nolottery" v-if="nolottery">
+
+      </div>
+      <div class="lottery" v-if="lottery">
+
+      </div>
     </div>
     <!--<head-top>
       <span class="go" slot="go"></span>
       <span class="head_title" slot="title_text">111</span>
     </head-top>-->
+    <div class="auth" v-if="auth">
+      <img src="../assets/img/dt_banner.png">
+      <div class="but">关注</div>
+    </div>
     <swiper id="swiper-nav" :options="swiperNav" ref="Tswiper">
       <swiper-slide class="list"><img src="../assets/img/dt_banner.png"></swiper-slide>
       <swiper-slide class="list">2</swiper-slide>
@@ -64,10 +74,23 @@
     </swiper>
     <div class="main">
       <router-link class="my" to="/my">我的奖品</router-link>
-      <router-link class="fx" to="">抄近道？直接刮奖点这里</router-link>
+      <router-link class="fx" to="">抄近道？直接刮奖点这里<div class="fx_ts" v-if="firstFx">分享有惊喜！大奖等着你</div></router-link>
     </div>
     <div class="dt">
-      1
+      <img class="size" src="../assets/img/dt1.png"/>
+      <div class="dt_main">
+        <div class="title">新修订的《消费者权益保护法》于（ ）正式实施？</div>
+        <div class="daan">A. 这是一行答案的行高</div>
+        <div class="daan">B. 这是两行答案的行高这是两行答案的行高这是这 这是两行答案的行高</div>
+        <div class="daan">C. 这是两行答案的行高这是两行答案的行高这是这 这是两行答案的行高</div>
+      </div>
+      <div style="clear: both;"></div>
+      <swiper id="swiper-name" :options="swiperName" ref="Nswiper">
+        <swiper-slide>*王尼玛一分钟前刮中一等奖</swiper-slide>
+        <swiper-slide>*王尼玛一分钟前刮中二等奖</swiper-slide>
+        <swiper-slide>*王尼玛一分钟前刮中三等奖</swiper-slide>
+        <swiper-slide>*王尼玛一分钟前刮中四等奖</swiper-slide>
+      </swiper>
     </div>
     <div class="foot">
       <div class="left" @click="gz"><img src="../assets/img/hd.png">活动规则</div>
@@ -76,12 +99,15 @@
   </div>
 </template>
 
-<script>
+<script type="text/javascript">
 import headTop from './header'
-
-export default {
+export default{
   data () {
     return {
+        lottery:false,
+        nolottery:false,
+        firstFx:true,
+        auth:true,
         zg:false,
         guize:false,
         shezhi:false,
@@ -94,6 +120,12 @@ export default {
             observeParents:true,
             loop:true,
             effect : 'fade',
+        },
+        swiperName:{
+            loop: true,
+            setWrapperSize:true,
+            autoplay: 3000,
+            speed:3000,
         }
     }
   },
@@ -102,27 +134,72 @@ export default {
   },
   methods:{
       gz() {
+        document.querySelector('body').style.overflow='hidden';
         this.zg = true;
         this.guize = true;
       },
       gzGb(){
+          document.querySelector('body').style.overflow='';
           this.zg = false;
           this.guize = false;
       },
       sz(){
+          document.querySelector('body').style.overflow='hidden';
           this.zg = true;
           this.shezhi = true;
       },
       szGb(){
+          document.querySelector('body').style.overflow='';
           this.zg = false;
           this.shezhi = false;
-      },
+      }
+  },
+  mounted(){
+      const vm = this;
+      window.share = function () {
+          vm.gz();
+      };
+  },
+  created(){
+
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+  .auth{
+    overflow: hidden;
+    width: 100%;
+    height: .67rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    background: rgba(58,58,58,.6);
+    img{
+      display: block;
+      float: left;
+      margin-top: .15rem;
+      margin-left: .22rem;
+      width: .37rem;
+      height: .37rem;
+    }
+    .but{
+      width: 1.02rem;
+      height: .42rem;
+      border-radius: .05rem;
+      border: 1px solid #fff;
+      color: #fff;
+      font-size: .26rem;
+      text-align: center;
+      line-height: .40rem;
+      float: right;
+      margin-right: .22rem;
+      margin-top: .13rem;
+    }
+  }
+
   .zg{
     position: fixed;
     left: 0;
@@ -205,7 +282,7 @@ export default {
         margin-left: -3.525rem;
       }
       >img{
-        margin: 1.6rem auto 0 auto;
+        margin: .35rem auto 0 auto;
         width: 7.05rem;
         height: auto;
         display: block;
@@ -216,7 +293,7 @@ export default {
         position: absolute;
         left: 50%;
         margin-left: -.4rem;
-        top:10.4rem;
+        top:10.38rem;
       }
     }
     .gz{
@@ -226,7 +303,7 @@ export default {
         position: absolute;
         left: 50%;
         margin-left: -.4rem;
-        top:10.75rem;
+        top:9.5rem;
       }
       .gz_text{
         .p1{
@@ -247,12 +324,12 @@ export default {
         position: absolute;
         left: 50%;
         margin-left: -3.25rem;
-        top: 4.42rem;
+        top: 3.15rem;
         width: 6.5rem;
         height: 5.7rem;
       }
       img{
-        margin: 1.6rem auto 0 auto;
+        margin: .35rem auto 0 auto;
         width: 7.05rem;
         height: auto;
         display: block;
@@ -287,9 +364,39 @@ export default {
   }
 
   .dt{
+    .dt_main{
+      width: auto;
+      margin:0 .34rem .2rem .34rem;
+      .daan{
+        text-indent: -1.15em;
+        padding-top: .1rem;
+        padding-bottom: .1rem;
+        padding-left: calc(~'.22rem + 1.15em');
+        padding-right: .22rem;
+        width: auto;
+        line-height: .44rem;
+        background: #EFF3F3;
+        color: #1D2733;
+        font-size: .26rem;
+        margin-bottom: .3rem;
+      }
+      .title{
+        margin-bottom: .3rem;
+        font-size: .32rem;
+        font-weight: bold;
+        color: #1D2733;
+        line-height: .48rem;
+      }
+    }
+    .size{
+      width: 4.6rem;
+      display: block;
+      margin: .2rem auto;
+    }
     margin: 0 auto;
     width: 7.1rem;
     height: auto;
+    overflow: hidden;
     box-shadow: 2px 0 .4rem rgba(0,0,0,.12);
   }
 
@@ -310,6 +417,17 @@ export default {
   }
 
   .fx{
+    .fx_ts{
+      background: url("../assets/img/ts.png") no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      width: 3.6rem;
+      height: .93rem;
+      line-height: 1rem;
+      text-align: center;
+      color: #fff;
+      font-size: .26rem;
+    }
     padding: 0 .35rem;
     background-clip: padding-box;
     position: relative;
@@ -328,6 +446,19 @@ export default {
   .main{
     width: 100%;
     height: 1.45rem;
+  }
+
+  #swiper-name{
+    margin-bottom: .2rem;
+    margin-right: .7rem;
+    float: right;
+    width: 4rem;
+    height: .4rem;
+    .swiper-slide{
+      text-align: right;
+      font-size: .22rem;
+      color: #FFA42E;
+    }
   }
 
   .swiper-container{

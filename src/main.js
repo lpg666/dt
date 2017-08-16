@@ -33,3 +33,8 @@ new Vue({
   store,
   router,
 }).$mount('#app');
+
+
+window.getSign=function (sign) {
+    alert(sign);
+}
