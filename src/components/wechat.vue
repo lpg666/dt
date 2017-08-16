@@ -1,10 +1,12 @@
 <template>
     <div style="width: 100%; height:100vh;">
+        <lottery v-if="lottery" :status="status"></lottery>
+        <div class="zg" v-if="lottery"></div>
         <img src="../assets/img/fx_yes.png">
         <p class="p1">保保送您一张刮刮乐</p>
         <div class="ggl">
             <span>
-                <div class="but">点击抽奖</div>
+                <div class="but" @click="cj">点击抽奖</div>
             </span>
         </div>
         <p class="p2">消费保，您的消费服务管家</p>
@@ -12,17 +14,41 @@
 </template>
 
 <script>
-    export default {
-        data(){
-            return{
+import lottery from './lottery'
 
-            }
+export default {
+    data(){
+        return{
+            lottery:false,
+            status:true
+        }
+    },
+    components:{
+        lottery
+    },
+    methods:{
+        cj(){
+            this.lottery=true;
+        },
+        closeTip(){
+            this.lottery=false;
+            this.status=true;
         }
     }
+}
 </script>
 
 
 <style lang="less" scoped>
+    .zg{
+        position: fixed;
+        left: 0;
+        top: 0;
+        background: rgba(0,0,0,.5);
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+    }
     .ggl{
         display: table;
         span{

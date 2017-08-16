@@ -51,12 +51,6 @@
         <div class="sz_gb" @click="szGb"></div>
         <img src="../assets/img/sz.png">
       </div>
-      <div class="nolottery" v-if="nolottery">
-
-      </div>
-      <div class="lottery" v-if="lottery">
-
-      </div>
     </div>
     <!--<head-top>
       <span class="go" slot="go"></span>
@@ -104,8 +98,6 @@ import headTop from './header'
 export default{
   data () {
     return {
-        lottery:false,
-        nolottery:false,
         firstFx:true,
         auth:true,
         zg:false,
@@ -157,7 +149,7 @@ export default{
   mounted(){
       const vm = this;
       window.share = function () {
-          vm.gz();
+          vm.$router.replace({path:'/wechat'});
       };
   },
   created(){
