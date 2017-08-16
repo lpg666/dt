@@ -2,6 +2,8 @@ import App from '../App'
 
 const home = r => require.ensure([], () => r(require('../components/home')), 'home');
 const wechat = r => require.ensure([], () => r(require('../components/wechat')), 'wechat');
+const from = r => require.ensure([], () => r(require('../components/myFrom')), 'from');
+const my = r => require.ensure([], () => r(require('../components/my')), 'my');
 
 export default [{
     path: '',
@@ -18,6 +20,14 @@ export default [{
         {
             path: '/wechat',
             component: wechat
+        },
+        {
+            path: '/my',
+            component: my
+        },
+        {
+            path: '/from',
+            component: from
         },
     ]
 }]

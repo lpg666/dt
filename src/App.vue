@@ -42,7 +42,7 @@ export default {
     opacity: 0;
   }
   .tc{
-    z-index: 9999;
+    z-index: 10000;
     height: 100%;
     width: 100%;
     position: fixed;
