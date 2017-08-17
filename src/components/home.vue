@@ -74,10 +74,6 @@
         <div class="gb"><div class="clickGb" @click="TK"></div></div>
       </div>
     </div>
-    <!--<head-top>
-      <span class="go" slot="go"></span>
-      <span class="head_title" slot="title_text">111</span>
-    </head-top>-->
     <div class="auth" v-if="auth">
       <img src="../assets/img/dt_banner.png">
       <div class="but">关注</div>
@@ -117,9 +113,7 @@
 
 <script type="text/javascript">
 import {mapMutations,mapState} from 'vuex'
-import headTop from './header'
 import lottery from './lottery'
-
 export default{
   data () {
     return {
@@ -152,7 +146,6 @@ export default{
     }
   },
   components:{
-      headTop,
       lottery
   },
   computed:{

@@ -12,6 +12,15 @@
     <meta name="screen-orientation" content="portrait">
     <meta name="x5-orientation" content="portrait">
     <title>消费保</title>
+    <script type="text/javascript">
+        function getAppSign(sign) {
+            console.log('此处APP调用了方法');
+            window.getSign(sign);
+        }
+        function alertShareSuccess() {
+            window.share();
+        }
+    </script>
   </head>
   <body>
     <div id="app">
@@ -19,13 +28,3 @@
     </div>
   </body>
 </html>
-<script type="text/javascript">
-
-    function getAppSign(sign) {
-        window.getSign(sign);
-    }
-
-    function alertShareSuccess() {
-        window.share();
-    }
-</script>

@@ -67,7 +67,6 @@
     }
 </script>
 
-
 <style lang="less" scoped>
     .alert{
         padding: .1rem .2rem .14rem .2rem;

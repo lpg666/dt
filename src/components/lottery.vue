@@ -32,7 +32,6 @@
     export default {
         data(){
             return{
-
             }
         },
         props:['status','lottery'],
@@ -62,7 +61,6 @@
         }
     }
 </script>
-
 
 <style lang="less" scoped>
     .lo{

@@ -8,7 +8,7 @@
         </swiper>
         <div class="title">
             <div class="t_l">我的奖品</div>
-            <div class="but">编辑资料</div>
+            <router-link to="/from" class="but">编辑资料</router-link>
         </div>
         <div class="my_jp">
             <div class="box">
@@ -66,7 +66,6 @@
         }
     }
 </script>
-
 
 <style lang="less" scoped>
     .info{

@@ -16,7 +16,6 @@ import {mapState,mapMutations} from 'vuex'
 export default {
     data(){
         return{
-
         }
     },
     computed:{
