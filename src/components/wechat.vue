@@ -1,6 +1,6 @@
 <template>
     <div style="width: 100%; height:100vh;">
-        <lottery v-if="lottery" :status="status"></lottery>
+        <lottery :lottery="lottery" :status="status" @close="close"></lottery>
         <div class="zg" v-if="lottery"></div>
         <img src="../assets/img/fx_yes.png">
         <p class="p1">保保送您一张刮刮乐</p>
@@ -20,7 +20,7 @@ export default {
     data(){
         return{
             lottery:false,
-            status:true
+            status:false
         }
     },
     components:{
@@ -29,10 +29,10 @@ export default {
     methods:{
         cj(){
             this.lottery=true;
+            this.status=false;
         },
-        closeTip(){
-            this.lottery=false;
-            this.status=true;
+        close(){
+            this.$router.replace({path:'/index'});
         }
     }
 }
@@ -82,7 +82,7 @@ export default {
     }
     .p1{
         text-align: center  ;
-        margin: .75rem 0;
+        margin: .75rem 0 .92rem 0;
         font-size: .32rem;
         line-height: .48rem;
         color: #1D2733;

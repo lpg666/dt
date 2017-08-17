@@ -38,11 +38,11 @@
             </div>
         </div>
         <div class="info">
-            <p>＊请填写真实的个人资料，保保将在活动结束后给您寄发奖品</p>
+            <p class="p1"><span>＊</span>请填写真实的个人资料，保保将在活动结束后给您寄发奖品</p>
             <div class="box">
-                <p>姓 名： 邵果</p>
-                <p>手机号： 13521605311</p>
-                <p>地 址： 广东省深圳市南山区松坪村朗山路中景马 商业城消费保</p>
+                <p><span>姓&nbsp;&nbsp;&nbsp;名：</span> 邵果</p>
+                <p><span>手机号：</span> 13521605311</p>
+                <p style="overflow: hidden;"><span style="float: left;">地&nbsp;&nbsp;&nbsp;址：</span><span style="line-height:.45rem; width: calc(100% - 4em - .4rem); float: left; margin-left: .1rem">广东省深圳市南山区松坪村朗山路中景马 商业城消费保</span></p>
             </div>
         </div>
     </div>
@@ -69,6 +69,35 @@
 
 
 <style lang="less" scoped>
+    .info{
+        width: 100%;
+        padding-bottom: .8rem;
+        .box{
+            padding: 1px 0;
+            width: 7.05rem;
+            height: auto;
+            margin: 0 auto;
+            box-shadow: 0 0 .4rem rgba(0,0,0,.12);
+            p{
+                span{
+                    display: inline-block;
+                    width: 4em;
+                }
+                margin: .25rem 0 .25rem .5rem;
+                font-size: .28rem;
+                color: #1D2733;
+            }
+        }
+        .p1{
+            span{
+                color: #317CF5;
+            }
+            padding: .35rem 0;
+            text-align: center;
+            font-size: .24rem;
+            color: #1D2733;
+        }
+    }
     .my_jp{
         width: 100%;
         .box{

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="zg" v-if="zg">
+      <lottery :lottery="lottery" :status="status" @close="close"></lottery>
       <div class="gz" v-if="guize">
         <div class="gz_text">
           <p class="p1">答题即可刮奖，每关3道题，全部答对送刮刮乐一次。 <br/>分享活动页面给好友，送刮刮乐一次，直接参与刮奖。 <br/>奖品可以累计。</p>
@@ -51,6 +52,27 @@
         <div class="sz_gb" @click="szGb"></div>
         <img src="../assets/img/sz.png">
       </div>
+      <div class="huida" v-if="dt">
+        <div class="box">
+          <div class="yes" v-if="right">
+            <img src="../assets/img/dt_yes.png">
+            <p class="p1">保保送您一张刮刮乐</p>
+            <div class="guaj">
+              <span>
+                <div class="but" @click="cj">点击抽奖</div>
+              </span>
+            </div>
+            <p class="p2">消费保，您的消费服务管家</p>
+          </div>
+          <div class="no" v-else>
+            <img src="../assets/img/nole.png">
+            <div class="but" @click="getIndex">再来一次</div>
+            <p class="p1">正确答案为：A</p>
+            <p class="p2">消费保，您的消费服务管家</p>
+          </div>
+        </div>
+        <div class="gb"><div class="clickGb" @click="TK"></div></div>
+      </div>
     </div>
     <!--<head-top>
       <span class="go" slot="go"></span>
@@ -68,13 +90,13 @@
     </swiper>
     <div class="main">
       <router-link class="my" to="/my">我的奖品</router-link>
-      <router-link class="fx" to="">抄近道？直接刮奖点这里<div class="fx_ts" v-if="firstFx">分享有惊喜！大奖等着你</div></router-link>
+      <div class="fx" @click="alertShare">抄近道？直接刮奖点这里<div class="fx_ts" v-if="firstFx">分享有惊喜！大奖等着你</div></div>
     </div>
     <div class="dt">
       <img class="size" src="../assets/img/dt1.png"/>
       <div class="dt_main">
         <div class="title">新修订的《消费者权益保护法》于（ ）正式实施？</div>
-        <div class="daan">A. 这是一行答案的行高</div>
+        <div class="daan" @click="dtAjax">A. 这是一行答案的行高</div>
         <div class="daan">B. 这是两行答案的行高这是两行答案的行高这是这 这是两行答案的行高</div>
         <div class="daan">C. 这是两行答案的行高这是两行答案的行高这是这 这是两行答案的行高</div>
       </div>
@@ -94,15 +116,22 @@
 </template>
 
 <script type="text/javascript">
+import {mapMutations,mapState} from 'vuex'
 import headTop from './header'
+import lottery from './lottery'
+
 export default{
   data () {
     return {
-        firstFx:true,
-        auth:true,
+        firstFx:true,   //第一次进来的提示分享
+        auth:true,      //微信关注
         zg:false,
         guize:false,
         shezhi:false,
+        right:false,
+        dt:false,
+        lottery:false,
+        status:false,
         swiperNav:{
             autoplay: 3500,
             autoplayDisableOnInteraction : false,
@@ -118,13 +147,25 @@ export default{
             setWrapperSize:true,
             autoplay: 3000,
             speed:3000,
+            onlyExternal:true
         }
     }
   },
   components:{
-      headTop
+      headTop,
+      lottery
+  },
+  computed:{
+      ...mapState([
+          'tan',
+          'share',
+      ])
   },
   methods:{
+      ...mapMutations([
+          'TAN',
+          'SHARE'
+      ]),
       gz() {
         document.querySelector('body').style.overflow='hidden';
         this.zg = true;
@@ -144,9 +185,54 @@ export default{
           document.querySelector('body').style.overflow='';
           this.zg = false;
           this.shezhi = false;
+      },
+      TK(){
+          this.zg = false;
+          this.dt = false;
+          this.right = false;
+      },
+      close(){
+          this.SHARE(false);
+          this.right = false;
+          this.dt = false;
+          this.zg = false;
+          this.lottery=false;
+          this.status=false;
+          this.$router.replace({path:'/index'});
+      },
+      getIndex(){
+          this.zg = false;
+          this.dt = false;
+          this.right = false;
+      },
+      dtAjax(){
+          this.zg = true;
+          this.dt = true;
+          this.right = true;
+      },
+      cj(){
+          this.SHARE(true);
+          this.lottery=true;
+          this.status=true;
+      },
+      alertShare(){
+          if(this.isWebview()){
+              if(this.isAndroid()){
+                  android.Share();
+              }else{
+                  window.android.alertShareViewFouction();
+              }
+          }else{
+              this.TAN(true);
+          }
       }
   },
   mounted(){
+      console.log(this.isWebview());
+      if(this.isWebview()){
+          this.auth=false;
+      }
+
       const vm = this;
       window.share = function () {
           vm.$router.replace({path:'/wechat'});
@@ -200,6 +286,119 @@ export default{
     width: 100%;
     height: 100%;
     z-index: 999;
+    .huida{
+      position: relative;
+      left: 0;
+      .box{
+        position: relative;
+        .yes{
+          padding: 1px;
+          .guaj{
+            span{
+              display: table-cell;
+              vertical-align: middle;
+              .but{
+                margin: 0 auto;
+                box-shadow: 1px 2px 8px rgba(0,0,0,.2);
+                font-size: .32rem;
+                color: #fff;
+                text-align: center;
+                width: 2.2rem;
+                height: .8rem;
+                line-height: .8rem;
+                display: block;
+                border-radius: .4rem;
+                background-image:-webkit-linear-gradient(to right, #307BF5, #82C3FF);
+                background-image:linear-gradient(to right,#307BF5,#82C3FF);
+              }
+            }
+            display: table;
+            margin: 0 auto;
+            width: 6rem;
+            height: 2.7rem;
+            background: url("../assets/img/guaka.png") no-repeat;
+            background-size: 100% 100%;
+          }
+          img{
+            width: 3.9rem;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+          }
+          .p1{
+            text-align: center;
+            margin-top: .75rem;
+            margin-bottom: .8rem;
+            font-size: .32rem;
+            color: #1D2733;
+          }
+          .p2{
+            width: 100%;
+            left: 0;
+            bottom: .7rem;
+            position: absolute;
+            text-align: center;
+            font-size: .26rem;
+            color: #999;
+          }
+        }
+        .no{
+          padding: 1px;
+          .p1{
+            margin-top: 1.15rem;
+            text-align: center;
+            font-size: .3rem;
+            color: #1D2733;
+          }
+          .p2{
+            width: 100%;
+            left: 0;
+            bottom: .7rem;
+            position: absolute;
+            text-align: center;
+            font-size: .26rem;
+            color: #999;
+          }
+          .but{
+            margin: 0 auto;
+            box-shadow: 1px 2px 8px rgba(0,0,0,.2);
+            font-size: .32rem;
+            color: #fff;
+            text-align: center;
+            width: 2.2rem;
+            height: .8rem;
+            line-height: .8rem;
+            display: block;
+            border-radius: .4rem;
+            background-image:-webkit-linear-gradient(to right, #307BF5, #82C3FF);
+            background-image:linear-gradient(to right,#307BF5,#82C3FF);
+          }
+          img{
+            width: 3.9rem;
+            height: auto;
+            display: block;
+            margin: .7rem auto;
+          }
+        }
+        margin:.35rem auto 0 auto;
+        width: 7.08rem;
+        height: 9.75rem;
+        background: #fff;
+      }
+      .gb{
+        .clickGb{
+          float: left;
+          margin-top: .77rem;
+          width: .62rem;
+          height: .62rem;
+        }
+        margin: 0 auto;
+        width: .62rem;
+        height: 1.37rem;
+        background: url("../assets/img/box_gb.png") no-repeat;
+        background-size: 100%;
+      }
+    }
     .sz{
       position: relative;
       .sz_text{

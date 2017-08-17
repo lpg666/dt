@@ -1,6 +1,8 @@
 import {
     RECORD_USERINFO,
-    TAN
+    TAN,
+    SIGN,
+    SHARE
 
 } from './mutation-types.js'
 
@@ -14,5 +16,12 @@ export default {
     },
     [TAN](state,info){
         state.tan = info;
+    },
+    [SIGN](state,info){
+        state.sign = info;
+        setStore('sign', info);
+    },
+    [SHARE](state,info){
+        state.share = info;
     },
 }

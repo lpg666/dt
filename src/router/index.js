@@ -15,19 +15,23 @@ export default [{
         },
         {
             path: '/index',
-            component: home
+            component: home,
+            meta: { aR: true },
         },
         {
             path: '/wechat',
-            component: wechat
+            component: wechat,
+            meta: { aR: true },
         },
         {
             path: '/my',
-            component: my
+            component: my,
+            meta: { aR: true },
         },
         {
             path: '/from',
-            component: from
+            component: from,
+            meta: { aR: true },
         },
     ]
 }]
